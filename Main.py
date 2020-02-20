@@ -21,4 +21,12 @@ except mysql.connector.Error as err:
 		print(err)
 else:
 	print("success")
+
+	cursor = cnx.cursor()
+	cursor.execute("select * from users")
+	for (username, password) in cursor:
+  		print(username, password)
+	cursor.close()
+
+
 	cnx.close()
