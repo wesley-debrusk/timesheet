@@ -1,36 +1,27 @@
 import mysql.connector
-import Connect
+from Database import Database
 from mysql.connector import errorcode
+from getpass import getpass
 
 
-# config = {
-# 'user': 'root',
-# 'password': 'databasepass',
-# 'host': '127.0.0.1',
-# 'database': 'timesheet',
-# 'raise_on_warnings': True
-# }
-#
-# try:
-# 	cnx = mysql.connector.connect(**config)
-# except mysql.connector.Error as err:
-# 	if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-# 		print("Something is wrong with your user name or password")
-# 	elif err.errno == errorcode.ER_BAD_DB_ERROR:
-# 		print("Database does not exist")
-# 	else:
-# 		print(err)
-# else:
-# 	print("success")
-#
-# 	cursor = cnx.cursor()
-# 	cursor.execute("select * from users")
-# 	for (username, password) in cursor:
-#   		print(username, password)
-# 	cursor.close()
-#
-#
-# 	cnx.close()
+db = Database.DB()
+code = db.connect()
 
-db = Connect.DB()
-db.connect()
+if (code == 0):
+	cursor = db.cnx.cursor()
+
+
+	print("Username: ", end = " ")
+	username = str(input())
+
+	password = getpass()
+
+	print(username + " " + password)
+
+
+	db.authenticate(username, password)
+
+
+	db.disconnect()
+else:
+	print("Could not connect to database.")
