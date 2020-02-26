@@ -27,12 +27,15 @@ while (True):
 
 	code = db.authenticate(username, password)
 	if (code == 1):
+		print("Invalid username or password, ty again? (y/n): ", end="")
+		cont = str(input())
 		clear_screen()
-		print("Invalid username or password")
+		if (cont != "y"):
+			break
 	elif (code == 0):
 		clear_screen()
 		app.run()
 		break
 
-
+os.system('cls' if os.name == 'nt' else 'clear')
 db.disconnect()
