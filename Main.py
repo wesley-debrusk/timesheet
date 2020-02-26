@@ -1,27 +1,38 @@
 import mysql.connector
+import os
+import App
 from Database import Database
 from mysql.connector import errorcode
 from getpass import getpass
 
+def clear_screen():
+	os.system('cls' if os.name == 'nt' else 'clear')
+	print("-----Timesheet Tracker-----")
 
+clear_screen()
+
+
+# Connect to database
 db = Database.DB()
-code = db.connect()
-
-if (code == 0):
+dbcode = db.connect()
+if (dbcode == 0):
 	cursor = db.cnx.cursor()
 
+app = App.Timesheet(cursor)
 
+while (True):
 	print("Username: ", end = " ")
 	username = str(input())
-
 	password = getpass()
 
-	print(username + " " + password)
+	code = db.authenticate(username, password)
+	if (code == 1):
+		clear_screen()
+		print("Invalid username or password")
+	elif (code == 0):
+		clear_screen()
+		app.run()
+		break
 
 
-	db.authenticate(username, password)
-
-
-	db.disconnect()
-else:
-	print("Could not connect to database.")
+db.disconnect()

@@ -43,6 +43,9 @@ class DB:
 
 	def authenticate(self, username, password):
 		self.cursor.execute("select * from users where username = %s", (username,))
-		rs = self.cursor.fetchall()
-		for (username, password) in rs:
-			print(username, password)
+		rs = self.cursor.fetchone()
+		if (rs == None):
+			return 1
+		else:
+			if (password == rs[1]):
+				return 0
