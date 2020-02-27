@@ -42,10 +42,10 @@ class DB:
 			print('Disconnected from database: ' + self.config["database"])
 
 	def authenticate(self, username, password):
-		self.cursor.execute("select * from users where username = %s", (username,))
+		self.cursor.execute("select AES_DECRYPT(password, 'secret') from users where username = %s", (username,))
 		rs = self.cursor.fetchone()
 		if (rs == None):
 			return 1
 		else:
-			if (password == rs[1]):
+			if (password == rs[0]):
 				return 0
