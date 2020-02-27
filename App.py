@@ -2,8 +2,8 @@
 
 
 class Timesheet:
-	def __init__(self, cursor):
-		self.cursor = cursor;
+	def __init__(self, user):
+		self.user = user;
 
 	def run(self):
 		print("Enter a command or type 'help' for a list of commands")
@@ -13,5 +13,5 @@ class Timesheet:
 			command = str(input())
 			if (command == "help"):
 				print("help me")
-			elif (command == "quit"):
+			elif (command == "logout"):
 				break
